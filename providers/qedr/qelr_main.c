@@ -252,11 +252,13 @@ static struct verbs_context *qelr_alloc_context(struct ibv_device *ibdev,
 		goto cmd_err;
 	}
 
-	v_ctx->create_qp_ex = qelr_create_qp_ex;
-	v_ctx->open_xrcd = qelr_open_xrcd;
-	v_ctx->close_xrcd = qelr_close_xrcd;
-	v_ctx->create_srq_ex = qelr_create_srq_ex;
-	v_ctx->get_srq_num = qelr_get_srq_num;
+	if (IS_ROCE(ibdev)) {
+		v_ctx->create_qp_ex = qelr_create_qp_ex;
+		v_ctx->open_xrcd = qelr_open_xrcd;
+		v_ctx->close_xrcd = qelr_close_xrcd;
+		v_ctx->create_srq_ex = qelr_create_srq_ex;
+		v_ctx->get_srq_num = qelr_get_srq_num;
+	}
 
 	return &ctx->ibv_ctx;
 
