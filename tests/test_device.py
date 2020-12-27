@@ -135,6 +135,9 @@ class DeviceTest(PyverbsAPITestCase):
         ctx, device_attr, _ = self.devices[0]
         try:
             port_attr = ctx.query_port(1)
+            if port_attr.gid_tbl_len == 1:
+                raise unittest.SkipTest('There is only one gid entry,'
+                                        ' cannot check bad flow')
             max_entries = device_attr.phys_port_cnt * port_attr.gid_tbl_len
             gid_indices = {gid_entry.gid_index for gid_entry in
                            ctx.query_gid_table(max_entries) if gid_entry.port_num == 1}
