@@ -164,6 +164,8 @@ static struct verbs_context *irdma_ualloc_context(struct ibv_device *ibdev,
 	}
 
 	verbs_set_ops(&iwvctx->ibv_ctx, &irdma_uctx_ops);
+	if (ibv_query_device(&iwvctx->ibv_ctx.context, &iwvctx->dev_attrs))
+		goto err_free;
 
 	/* Legacy i40iw does not populate hw_rev. The irdma driver always sets it */
 	if (!resp.hw_rev) {

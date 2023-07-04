@@ -1310,6 +1310,7 @@ struct ibv_qp *irdma_ucreate_qp(struct ibv_pd *pd,
 				struct ibv_qp_init_attr *attr)
 {
 	struct irdma_qp_uk_init_info info = {};
+	struct ibv_device_attr *dev_attrs;
 	struct irdma_uk_attrs *uk_attrs;
 	struct irdma_uvcontext *iwvctx;
 	struct irdma_uqp *iwuqp;
@@ -1325,10 +1326,13 @@ struct ibv_qp *irdma_ucreate_qp(struct ibv_pd *pd,
 	iwvctx = container_of(pd->context, struct irdma_uvcontext,
 			      ibv_ctx.context);
 	uk_attrs = &iwvctx->uk_attrs;
+	dev_attrs = &iwvctx->dev_attrs;
 
 	if (attr->cap.max_send_sge > uk_attrs->max_hw_wq_frags ||
 	    attr->cap.max_recv_sge > uk_attrs->max_hw_wq_frags ||
-	    attr->cap.max_inline_data > uk_attrs->max_hw_inline) {
+	    attr->cap.max_inline_data > uk_attrs->max_hw_inline ||
+	    attr->cap.max_send_wr > dev_attrs->max_qp_wr ||
+	    attr->cap.max_recv_wr > dev_attrs->max_qp_wr) {
 		errno = EINVAL;
 		return NULL;
 	}

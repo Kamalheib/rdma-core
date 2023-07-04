@@ -54,6 +54,7 @@ struct irdma_uvcontext {
 	struct verbs_context ibv_ctx;
 	struct irdma_upd *iwupd;
 	struct irdma_uk_attrs uk_attrs;
+	struct ibv_device_attr dev_attrs;
 	void *db;
 	int abi_ver;
 	bool legacy_mode;
