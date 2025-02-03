@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: (GPL-2.0 OR Linux-OpenIB)
 # Copyright (c) 2019, Mellanox Technologies. All rights reserved.
 
-#cython: legacy_implicit_noexcept=True
-
 from libc.stdint cimport uintptr_t, uint32_t
 from libc.stdlib cimport malloc
 import weakref
@@ -155,7 +153,7 @@ cdef class PD(PyverbsCM):
 
 
 cdef void *pd_alloc(v.ibv_pd *pd, void *pd_context, size_t size,
-                  size_t alignment, v.uint64_t resource_type):
+                  size_t alignment, v.uint64_t resource_type) noexcept:
     """
     Parent Domain allocator wrapper. This function is used to wrap a
     user-defined Python alloc function which should be a part of pd_context.
@@ -177,7 +175,7 @@ cdef void *pd_alloc(v.ibv_pd *pd, void *pd_context, size_t size,
 
 
 cdef void pd_free(v.ibv_pd *pd, void *pd_context, void *ptr,
-                     v.uint64_t resource_type):
+                     v.uint64_t resource_type) noexcept:
     """
     Parent Domain deallocator wrapper. This function is used to wrap a
     user-defined Python free function which should be part of pd_context.
