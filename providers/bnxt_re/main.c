@@ -214,6 +214,7 @@ static struct verbs_context *bnxt_re_alloc_context(struct ibv_device *vdev,
 					 BNXT_RE_CHIP_ID0_CHIP_MET_SFT) &
 					 0xFF;
 		cntx->cctx.gen_p5_p7 = bnxt_re_is_chip_gen_p5_p7(&cntx->cctx);
+		cntx->cctx.gen_p7 = bnxt_re_is_chip_gen_p7(&cntx->cctx);
 	}
 
 	if (resp.comp_mask & BNXT_RE_UCNTX_CMASK_HAVE_MODE)

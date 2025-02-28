@@ -2099,7 +2099,7 @@ static struct ibv_qp *__bnxt_re_create_qp(struct ibv_context *ibvctx,
 	fque_init_node(&qp->snode);
 	fque_init_node(&qp->rnode);
 
-	if (qp->cctx->gen_p5_p7 && cntx->udpi.wcdpi) {
+	if (qp->cctx->gen_p7 && cntx->udpi.wcdpi) {
 		qp->push_st_en = 1;
 		qp->max_push_sz = BNXT_RE_MAX_INLINE_SIZE;
 		qp->pbuf = bnxt_re_get_pbuf(&qp->push_st_en, cntx);
